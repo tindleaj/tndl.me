@@ -2,27 +2,32 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="apple-mobile-web-app-capable"
-        content="yes">
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1">
-  <meta name="description"
-        content="">
-  <meta name="author"
-        content="">
-  <link href="https://fonts.googleapis.com/css?family=Fira+Mono|Fira+Sans"
-        rel="stylesheet">
-  <link href="{{ config.base_url }}/site.css"
-        rel="stylesheet">
+      <meta charset="UTF-8">
+      <meta name="apple-mobile-web-app-capable"
+            content="yes">
+      <meta name="viewport"
+            content="width=device-width, initial-scale=1">
+      <meta name="description"
+            content="">
+      <meta name="author"
+            content="">
+      <link href="https://fonts.googleapis.com/css?family=Fira+Mono|Fira+Sans"
+            rel="stylesheet">
+      <link href="{{ config.base_url }}/site.css"
+            rel="stylesheet">
 
-  <title>{{ page.title }}</title>
+      <title>Austin Tindle | {{ page.title }}</title>
 </head>
 
 <body id="blog">
-  <section class="markdown">
-    {{ page.content | safe }}
-  </section>
+      <div>
+            <a href="{{ config.base_url }}/blog">&#060;--</a>
+            <p>&nbsp;</p>
+      </div>
+      <section class="markdown">
+            <p>{{ page.date }}</p>
+            {{ page.content | safe }}
+      </section>
 </body>
 
 </html>

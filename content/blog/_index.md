@@ -1,7 +1,5 @@
 +++
-title = "Austin Tindle | Blog"
+title = "Blog"
 +++
 
 Thoughts on programming, productivity, philosophy.
-
-[Subscribe (RSS)]()

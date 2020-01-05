@@ -16,15 +16,16 @@
   <link href="{{ config.base_url }}/site.css"
         rel="stylesheet">
 
-  <title>{{ section.title }}</title>
+  <title>Austin Tindle | {{ section.title }}</title>
 </head>
 
 <body id="section">
   <section>
-    <h1><a href="/">Austin Tindle</a></h1>
+    <h1><a href="{{ config.base_url }}">Austin Tindle</a></h1>
     <p><em>Software Engineer</em></p>
     <p>---</p>
     {{ section.content  | safe }}
+    <p><a href="{{ config.base_url }}/rss.xml">Subscribe (RSS).</a></p>
   </section>
 
   <p>&nbsp;</p>
@@ -32,7 +33,12 @@
 
     {% for page in section.pages %}
     <article>
-      <h3><a href="{{ page.permalink }}">{{ page.title }}</a></h3>
+      <span>
+        <h3>
+          <a href="{{ page.permalink }}"> {{ page.title }}</a>
+          <span style="font-weight: 300;">({{ page.date }})</span>
+        </h3>
+      </span>
     </article>
     {% endfor %}
 

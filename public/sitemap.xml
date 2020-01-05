@@ -12,12 +12,21 @@
         </url>
     
         <url>
-            <loc>http://127.0.0.1:1111/blog/reading/</loc>
+            <loc>http://127.0.0.1:1111/blog/2020/</loc>
             
         </url>
     
         <url>
-            <loc>http://127.0.0.1:1111/blog/wc/</loc>
+            <loc>http://127.0.0.1:1111/blog/2020/reading/</loc>
+            
+                <lastmod>2020-01-05</lastmod>
+            
+        </url>
+    
+        <url>
+            <loc>http://127.0.0.1:1111/blog/2020/wc/</loc>
+            
+                <lastmod>2020-01-07</lastmod>
             
         </url>
     

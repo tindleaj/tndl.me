@@ -1,5 +1,5 @@
 +++
-title = "Austin Tindle"
+title = "Home"
 +++
 
 # [Austin Tindle](/)

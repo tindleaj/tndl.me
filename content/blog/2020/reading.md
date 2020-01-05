@@ -1,9 +1,11 @@
 +++
 title = "What I Read in 2019"
+description = ""
+date = 2020-01-05
 draft = true
 +++
 
-# What I Read in 2019
+<!-- more -->
 
 ## Books
 

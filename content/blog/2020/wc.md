@@ -1,33 +1,32 @@
 +++
 title = "Writing a simple command line program in Rust"
+description = "A JavaScript developer's guide to the Rust programming language"
+date = 2020-01-07
 draft = true
 +++
 
-# Writing a simple command line program in Rust
-
-_A JavaScript developer's guide to the Rust programming language_
-
-- [Writing a simple command line program in Rust](#writing-a-simple-command-line-program-in-rust)
-  - [Introduction](#introduction)
-  - [Setting up](#setting-up)
-    - [Project structure](#project-structure)
-    - [Running the project](#running-the-project)
-    - [Tour of a &quot;Hello World&quot; program in Rust](#tour-of-a-quothello-worldquot-program-in-rust)
-  - [The miniwc program](#the-miniwc-program)
-    - [Building a foundation](#building-a-foundation)
-      - [Types](#types)
-      - [Structures (struct)](#structures-struct)
-      - [Implementations (impl)](#implementations-impl)
-    - [Handling arguments](#handling-arguments)
-      - [The Iterator trait](#the-iterator-trait)
-      - [Storing things in Vectors](#storing-things-in-vectors)
-      - [The panic! macro](#the-panic-macro)
-    - [The filesystem](#the-filesystem)
-      - [Handling possible failure with expect](#handling-possible-failure-with-expect)
-
-## Introduction
-
 In this article we will build a simple command line program that returns the word count of a file. This will essentially be a simpler version of the Unix utility `wc`, written in Rust. The goal of this article is to give an introduction to some core Rust concepts for readers who might be more familiar with web languages such as JavaScript and Typescript. Therefore, the Rust code examples will be compared to similar code and concepts in JavaScrip or TypeScript. This guide also assumes no prior knowledge of Rust or related tools, but it does assume you have `node` and `npm` installed on your machine already.
+
+<!-- more -->
+
+- [Notes](#notes)
+- [Setting up](#setting-up)
+  - [Project structure](#project-structure)
+  - [Running the project](#running-the-project)
+  - [Tour of a &quot;Hello World&quot; program in Rust](#tour-of-a-quothello-worldquot-program-in-rust)
+- [The miniwc program](#the-miniwc-program)
+  - [Building a foundation](#building-a-foundation)
+    - [Types](#types)
+    - [Structures (struct)](#structures-struct)
+    - [Implementations (impl)](#implementations-impl)
+  - [Handling arguments](#handling-arguments)
+    - [The Iterator trait](#the-iterator-trait)
+    - [Storing things in Vectors](#storing-things-in-vectors)
+    - [The panic! macro](#the-panic-macro)
+  - [The filesystem](#the-filesystem)
+    - [Handling possible failure with expect](#handling-possible-failure-with-expect)
+
+## Notes
 
 A couple of notes and assumptions:
 
