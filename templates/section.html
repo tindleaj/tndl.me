@@ -47,7 +47,10 @@
     {% set section = get_section(path=sub) %}
     {% for page in section.pages %}
     <article>
-      <h3><a href="{{ page.permalink }}">{{ page.title }}</a></h3>
+      <h3>
+        <a href="{{ page.permalink }}"> {{ page.title }}</a>
+        <span style="font-weight: 300;">({{ page.date }})</span>
+      </h3>
     </article>
     {% endfor %}
 
