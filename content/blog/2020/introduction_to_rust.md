@@ -1,11 +1,11 @@
 +++
-title = "Writing a simple command line program in Rust"
-description = "A JavaScript developer's guide to the Rust programming language"
+title = "Introduction to Rust for Node Developers"
+description = "A JavaScript developer's guide to writing a command line program using the Rust programming language"
 date = 2020-01-07
 draft = true
 +++
 
-In this article we will build a simple command line program that returns the word count of a file. This will essentially be a simpler version of the Unix utility `wc`, written in Rust. The goal of this article is to give an introduction to some core Rust concepts for readers who might be more familiar with web languages such as JavaScript and Typescript. Therefore, the Rust code examples will be compared to similar code and concepts in JavaScrip or TypeScript. This guide also assumes no prior knowledge of Rust or related tools, but it does assume you have `node` and `npm` installed on your machine already.
+In this article we will build a simple command line program that returns the word count of a file. This will essentially be a simpler version of the Unix utility `wc`, written in Rust. The goal of this article is to give an introduction to some core Rust concepts for readers who might be more familiar with web-focused languages such as JavaScript and Typescript. Therefore, the Rust code examples will be compared to similar code and concepts in JavaScrip or TypeScript. This guide also assumes no prior knowledge of Rust or related tools, but it does assume you have `node` and `npm` installed on your machine already.
 
 <!-- more -->
 
