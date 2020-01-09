@@ -19,12 +19,14 @@ In this article we will build a simple command line program that returns the wor
     - [Types](#types)
     - [Structures (struct)](#structures-struct)
     - [Implementations (impl)](#implementations-impl)
+    - [Enumerations (enum)](#enumerations-enum)
   - [Handling arguments](#handling-arguments)
-    - [The Iterator trait](#the-iterator-trait)
-    - [Storing things in Vectors](#storing-things-in-vectors)
-    - [The panic! macro](#the-panic-macro)
+    - [Using Iterators](#using-iterators)
+    - [Handling all Options](#handling-all-options)
   - [The filesystem](#the-filesystem)
     - [Handling possible failure with expect](#handling-possible-failure-with-expect)
+  - [Conclusion](#conclusion)
+    - [Other great resources](#other-great-resources)
 
 ## Notes
 
@@ -35,7 +37,7 @@ A couple of notes and assumptions:
 
 ## Setting up
 
-In order to get started, first we need to set up a new Rust project. If you haven't yet installed Rust on your computer, you can take a look at [the official 'getting started' guide](https://www.rust-lang.org/learn/get-started).
+In order to get started, first we need to set up a new Rust project. If you haven't yet installed Rust on your computer, you can take a look at [the official 'getting started' guide](https://www.rust-lang.org/learn/get-started), or the [first chapter of The Rust Book](https://doc.rust-lang.org/book/ch01-01-installation.html).
 
 Once you have `cargo` available, go ahead and run `cargo new miniwc --bin` in a suitable directory.
 
@@ -60,7 +62,7 @@ That's it for the project structure, but what about actually running the code? I
 
 Let's take a moment to take a look at the auto-generated code within `main.rs` and draw some basic parallels from the JavaScript world to that of Rust:
 
-Filename: src/main.rs
+File: src/main.rs
 
 ```rust
 fn main() {
@@ -114,8 +116,9 @@ Before we can begin tackling the program requirements we've outlined above, ther
 - The type system in Rust, and how it relates to types in JavaScript
 - Rust `struct`s, their similarity to JavaScript `Objects`, and an overview on how to use them to provide _structure_ to our code
 - Rust `impl`s, the JavaScript _Prototypal Inheritance_ model, and how we can create reusable functionality in our Rust code
+- A quick note on _enumerations_ (`enum`s)
 
-There are some concepts here that may seem very foreign, but they all map to JavaScript concepts you probably already know and use regularly. If you have a good grasp on the above topics already, feel free to skip the next few sections. Otherwise, let's unpack them one at a time.
+There are some concepts here that may seem very foreign, but they all map to JavaScript concepts you probably already know and use regularly. If you have a good grasp on the above topics already, feel free to [skip the next few sections](#handling-arguments). Otherwise, let's unpack them one at a time.
 
 #### Types
 
@@ -222,6 +225,30 @@ In this version of the program, we've defined `Message` as a _trait_, which can 
 
 Hopefully this sheds a bit of light onto the basics of Rust inheritance (via `traits` and `impl`) versus JavaScript (via prototypes). If any of this still feels opaque, take some time to dive-in to the relevant sections in the Rust Book:
 
+#### Enumerations (`enum`)
+
+If you're familiar with TypeScript, then Rust's `enum` _type_ is a close parallel. If not, _enumerations_ are relatively straightforward: they define a _type_ that can be one of several _variants_. For example, we can create an _enum_ that represents the different types of common U.S. coinage like so:
+
+```rust
+enum Coin {
+  Penny,
+  Nickel,
+  Dime,
+  Quarter,
+  HalfDollar,
+  Dollar
+}
+```
+
+And we can reference any singe variant via:
+
+```rust
+let penny: Coin  = Coin::Penny;
+let dime: Coin = Coin::Dime;
+```
+
+As you can see, both `penny` and `dime` are `Coin`s (they have the `Coin` type), but we can get more specific and state the _variant_ of `Coin` that each variable holds. In JavaScript
+
 ### Handling arguments
 
 Now that we've explored the necessary foundational concepts to understand and implement our `miniwc` program, let's get back to our `miniwc` program. As mentioned before, our program should:
@@ -232,17 +259,29 @@ Now that we've explored the necessary foundational concepts to understand and im
 
 Currently, our program does none of the things outlined above. When you execute `cargo run` from the command line, we still just see `Hello, world!` printed out. Let's take it step by step, and first handle taking a filename as an argument.
 
-In `node`, one of the global variables made available to our programs during runtime is the `process.argv` variable. This variable contains all of the arguments passed to your `node` program. Rust does not have a runtime, so how can we get arguments passed to our program?
+In `node`, one of the global variables made available to our programs during runtime is the `process.argv` variable. This variable contains all of the arguments passed to your `node` program. To take command line arguments and print them out using `node`, we could do the following:
 
-Although Rust doesn't have a language-specific runtime, the operating system your Rust program runs on _is_ technically a runtime. And luckily for us, the operating system provides a way to inject variables into programs. We won't need to get into the specifics of how that happens (and the potential pitfalls), because the _Rust standard library_ provides an easy way for us to access the arguments passed to our program, via the `std::env` module. Similar to how `process.argv` works in `node`, the `std::env` module will allow us to get a list of arguments we can then use how we'd like.
+File: main.js
+
+```javascript
+for (let arg of process.argv) {
+  console.log(arg)
+}
+```
+
+If you save and run that program in the root of the project using `node main.js hello`, you should get three outputs. The first output is the program running our JavaScript code (in this case `node`). The second is the filename of the program being run, and the third is the argument we passed in.
+
+Rust does not have a runtime environment like `node`, so how can we get arguments passed to our program?
+
+Although Rust doesn't have a language-specific runtime environment, the operating system your Rust program runs on _is_ technically a runtime. And luckily for us, the operating system provides a way to inject variables into programs. We won't need to get into the specifics of how that happens (and the potential pitfalls), because the _Rust standard library_ provides an easy way for us to access the arguments passed to our program, via the `std::env` module. Similar to how `process.argv` works in `node`, the `std::env` module will allow us to get a list of arguments we can then use how we'd like.
 
 In order to use the `std::env` module, we'll have to `use` it at the top of our program like so: `use std::env`. The `use` keyword in Rust is sort of analogous to the `import` keyword in ES6, and it allows us to bring a module into scope. With the `env` module in scope, we can now use the public function [`args`](https://doc.rust-lang.org/std/env/fn.args.html), which exists in the `env` module.
 
-This function will return a value with the _type_ of `Args`, which _implements_ the _trait_ `Iterator`. The function signature for `args` looks like so: `fn args() -> Args`.
+This function will return a value with the _type_ of `Args`. `Args` _implements_ the _trait_ `Iterator`, which allows us to _iterate_ over the returned arguments. The function signature for `args` looks like so: `fn args() -> Args`.
 
-These are all concepts we've explored in the last few sections, so now let's put them to work. Once you've added the `use` statement for `std::env`, your program should look like this:
+Except for `Iterator` and the idea of _iterating_, these are all concepts we've explored in the last few sections, so now let's put them to work. Once you've added the `use` statement for `std::env`, your program should look like this:
 
-Filename: src/main.rs
+File: src/main.rs
 
 ```rust
 use std::env;
@@ -252,12 +291,145 @@ fn main() {
 }
 ```
 
-#### The Iterator trait
+Let's enhance our program and print out all of the arguments that we pass in from the command line:
 
-#### Storing things in Vectors
+File: src/main.rs
 
-#### The `panic!` macro
+```rust
+use std::env;
+
+fn main() {
+  for arg in env::args() {
+    println!("{}", arg);
+  }
+}
+```
+
+_If the `println!` macro call seems a bit strange, you can [dive deeper here](https://doc.rust-lang.org/book/ch19-06-macros.html), but you can also simply think of `println!` as similar to JavaScript template literals: anything between `{}` will be replaced with the variable you pass as subsequent arguments. Play around with it a bit to get a more intuitive feel for how it works._
+
+Now let's run the program and pass it some arguments via `cargo run -- hello world` (we separate the commands passed to `cargo` and the commands passed to our program with `--`). You should get the following output:
+
+```txt
+target/debug/miniwc
+hello
+world
+```
+
+The first line of our output is actually the name of the program running, by convention. It's `target/debug/miniwc` because that's the binary created for us by `cargo`. If you compiled this project for release, or used `rustc` to compile, then the first item in the `args()` value would just be `miniwc`. On the next two lines we see the two arguments we passed in.
+
+Our program now nominally supports passing in arguments via the command line. Now we're ready to do something with them.
+
+#### Using Iterators
+
+Let's start by binding the value of the first argument passed in by the user (ignoring the program path argument, which comes first) using the `nth` method on the `Args` _type_. `Args` is the type of the value returned from `std::env::args()`, and it _implements_ the `Iterator` type, thereby inheriting all of the methods on `Iterator`. As per [the `Args` documentation](https://doc.rust-lang.org/std/env/struct.Args.html), `Args` specifically gives us an `Iterator` whose values are `String`s.
+
+One of the [methods we get by inheriting from `Iterator` is `nth`](https://doc.rust-lang.org/std/iter/trait.Iterator.html#method.nth), which returns the value of the `Iterator` item at the index given to `nth`. For example, `env::args().nth(1)` should give us the value at index `1` of the `args_list`. You can think of `Iterator` as sort of giving the properties of a JavaScript `Array` to any type that _implements_ `Iterator`. Like `Array`s, `Iterators` come with all sorts of useful [methods](https://doc.rust-lang.org/std/iter/trait.Iterator.html#provided-methods).
+
+With `nth`, we should now be able to grab the first argument passed to our program. Let's set that value to a variable, and try to print it out with the following code:
+
+File: src/main.rs
+
+```rust
+use std::env;
+
+pub fn main() {
+    let filename = env::args().nth(1);
+    println!("{}", filename)
+}
+```
+
+After a `cargo run -- hello`, we see:
+
+```txt
+error[E0277]: `std::option::Option<std::string::String>` doesn't implement `std::fmt::Display`
+ --> src/main.rs:5:20
+  |
+5 |     println!("{}", filename)
+  |                    ^^^^^^^^ `std::option::Option<std::string::String>` cannot be formatted with the default formatter
+  |
+  = help: the trait `std::fmt::Display` is not implemented for `std::option::Option<std::string::String>`
+  = note: in format strings you may be able to use `{:?}` (or {:#?} for pretty-print) instead
+  = note: required by `std::fmt::Display::fmt`
+
+error: aborting due to previous error
+```
+
+An error! What happened?
+
+#### Handling all `Option`s
+
+The issue with our code is that `nth` doesn't return a `String` directly, but instead returns a type called `Option`. `Option` is part of an interesting feature of Rust: it has no `null` primitive type. Unlike most languages which have a `null` type (and very much unlike JavaScript which has `null` and `undefined`), Rust forces you to account for all possible values when working with operations that are influenced by things outside of the program's control, like accepting command line arguments or doing file I/O. To do this, Rust makes use of the `Option` _enum_, which can either be `Some(value)` or `None`. If the value is `None`, Rust makes you explicitly handle it, otherwise it will be a compile time error like we saw above. While this may seem overly rigid, this is one of the features of Rust that leads to less error-prone programs.
+
+Let's look at a JavaScript example that illustrates this point:
+
+File: main.js
+
+```javascript
+// Get the first argument passed in by the user
+let arg = process.argv[2]
+
+// Do mission critical things with our argument
+function handleArg(arg) {
+  // Really important stuff
+  console.log(arg.split(''))
+}
+
+handleArg(arg)
+```
+
+There's a subtle error that will only happen sometimes in this code. Can you spot it? If we pass an argument to our program -- `node main.js hello` -- then it behaves as expected. However, if we don't pass an argument, we'll get an error that's probably very familiar if you use JavaScript a lot:
+
+```txt
+console.log(arg.split(''))
+                  ^
+
+TypeError: Cannot read property 'split' of undefined
+```
+
+In this case, it's easy to see what went wrong: if we don't pass an argument to our program, we end up setting our `arg` variable to the value at an array index that doesn't exist. JavaScript defaults that value to `undefined`, which then causes an error later on in our `handleArg` function when we try to `split()` the undefined value.
+
+While this example is trivial to fix, it's very easy to introduce this kind of bug into a larger JavaScript program, where it's potentially much harder to find the original cause of the `undefined` value. A typical fix would have us check that the value exists before trying to use it, but that requires more code and more diligent programmers.
+
+In cases where we're dealing with input to our program that can be undefined, Rust forces us to handle the potential undefined value with the `Option` type before the program will even compile. We can see the `Option` type in action if we tweak our `println!` call a bit:
+
+```rust
+use std::env;
+
+pub fn main() {
+    let filename = env::args().nth(1);
+    println!("{:?}", filename)
+}
+```
+
+_This solution was hinted at [in our error message from before](#using-iterators).By adding the `:?` to the curly brackets, we're essentially telling the `println!` macro that we want to be more lenient about the types of values we can print to the console (specifically, we've added the [debug format trait](https://doc.rust-lang.org/rust-by-example/hello/print/print_debug.html))._
+
+_If this doesn't make much sense, don't worry about it for now. In general, the Rust compiler is very helpful, and you can usually rely it's suggestions to fix your code if you've gotten stuck. In this case, let's follow it's advice and see what we get._
+
+After a `cargo run -- hello`, you should see:
+
+```txt
+Some("hello")
+```
+
+There it is! Since we passed in an argument to our program, `env::args.nth(1)` contains `Some` value. Now, try running the program without an argument. This time you should've gotten the `None` variant, just as we expected.
+
+Now that we understand a bit about what's going on with Rust's `Option` type, how do we actually get to the value inside `Some`? Conveniently, Rust offers us a shortcut for grabbing values we are pretty sure are going to exist in our program:
+
+```rust
+use std::env;
+
+pub fn main() {
+    let filename = env::args().nth(1).unwrap();
+    println!("{}", filename) // we no longer need the ':?'
+}
+```
+
+`unwrap()` is a method available on `Option`, and it's pretty straightforward. If there is `Some(value)`, then return the value. If not, then _panic_ (error out). `unwrap()` also serves as a sort of "TODO" flag, in other words you know you should replace it before releasing your program into the world.
 
 ### The filesystem
 
 #### Handling possible failure with `expect`
+
+### Conclusion
+
+#### Other great resources
