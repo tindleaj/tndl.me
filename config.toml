@@ -1,6 +1,12 @@
 # The URL the site will be built for
 base_url = "https://tndl.me"
 
+description = "Thoughts on programming, productivity, philosophy."
+
+default_language = "en"
+
+title = "Austin Tindle's Blog"
+
 # Whether to automatically compile all Sass files in the sass directory
 compile_sass = false
 
