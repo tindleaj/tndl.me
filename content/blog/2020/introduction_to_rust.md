@@ -26,10 +26,10 @@ In this article we will build a simple command line program that returns the wor
   - [Reading file contents](#reading-file-contents)
     - [`Result` and `expect()`](#result-and-expect)
   - [Counting words](#counting-words)
-  - [Conclusion](#conclusion)
-    - [Additional resources](#additional-resources)
-      - [For learning](#for-learning)
-      - [Other](#other)
+- [Conclusion](#conclusion)
+  - [Additional resources](#additional-resources)
+    - [For learning](#for-learning)
+    - [Other](#other)
 
 ## Notes
 
@@ -267,7 +267,7 @@ Rust does not have a runtime environment like `node`, so how can we get argument
 
 Although Rust doesn't have a language-specific runtime environment, the operating system your Rust program runs on _is_ technically a runtime. And luckily for us, the operating system provides a way to inject variables into programs. We won't need to get into the specifics of how that happens (and the potential pitfalls), because the _Rust standard library_ provides an easy way for us to access the arguments passed to our program, via the `std::env` module. Similar to how `process.argv` works in `node`, the `std::env` module will allow us to get a list of arguments we can then use how we'd like.
 
-In order to use the `std::env` module, we'll have to `use` it at the top of our program like so: `use std::env`. The `use` keyword in Rust is sort of analogous to the `import` keyword in ES6, and it allows us to bring a module into scope. With the `env` module in scope, we can now use the public function [`args`](https://doc.rust-lang.org/std/env/fn.args.html), which exists in the `env` module.
+In order to make the `std::env` module more ergonomic to use, we can `use` it at the top of our program like so: `use std::env`. The `use` keyword allows us to bring a module into scope. The `std` library is already available to our program, so we could just type `std::env::foo_function` every time we wanted to use something from the `env` module, but with `use` we can bring the `env` module directly into scope. A loose parallel between `use` to an equivalent in JavaScript would be taking a globally available function like `global.console.log` and setting it to its own variable for easier use, for example `let log = global.console.log`. With the `env` module in scope, we can now use the public function [`args`](https://doc.rust-lang.org/std/env/fn.args.html), which exists in the `env` module.
 
 This function will return a value with the _type_ of `Args`. `Args` _implements_ the _trait_ `Iterator`, which allows us to _iterate_ over the returned arguments. The function signature for `args` looks like so: `fn args() -> Args`.
 
@@ -514,7 +514,7 @@ Once we've done that, we can consume the `Iterator` with `count()` to get the nu
 
 Finally, we print the resulting count to the console. And that's it! Run `cargo run -- words.txt` to see the number of words in our text file.
 
-### Conclusion
+## Conclusion
 
 This program is very simple, but it illustrates a plethora of core Rust concepts. It also leaves out some other very important tools and ideas. For example:
 
@@ -525,9 +525,9 @@ This program is very simple, but it illustrates a plethora of core Rust concepts
 
 If you've made it this far, thanks so much for reading! Writing this article has been a learning process for me, and I still very much consider myself a Rust beginner. If you spot any mistakes, or see any grievous infractions of best-practices, please reach out at `tindleaj[at]gmail[dot]com` or [@tindleaj](https://twitter.com/tindleaj) If you're interested in learning more Rust, there are a ton of other great, free, and current resources to do so.
 
-#### Additional resources
+### Additional resources
 
-##### For learning
+#### For learning
 
 - [The Rust Programming Language](https://doc.rust-lang.org/stable/book/) - official, incredibly well written, definitely should be your first stop
 - [Rustlings](https://github.com/rust-lang/rustlings) - awesome interactive learning tool
@@ -536,7 +536,7 @@ If you've made it this far, thanks so much for reading! Writing this article has
 - [A Gentle Introduction to Rust](https://stevedonovan.github.io/rust-gentle-intro/readme.html) - a tour through some of the great Rust features
 - [Exercism.io](https://exercism.io/tracks/rust) - more small, interactive projects
 
-##### Other
+#### Other
 
 - [Writing an OS in Rust](https://os.phil-opp.com/) - incredible project, I aspire to one day be this good
 - [IntermezzOS](http://intermezzos.github.io/) - more operating systems
