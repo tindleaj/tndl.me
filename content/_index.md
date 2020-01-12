@@ -21,3 +21,5 @@ Primary tools include JavaScript and TypeScript. Experience with Rust, Python, a
 [github.com/tindleaj](https://github.com/tindleaj)
 
 [twitter.com/tindleaj](https://twitter.com/tindleaj)
+
+[medium.com/@tindleaj](https://medium.com/@tindleaj)

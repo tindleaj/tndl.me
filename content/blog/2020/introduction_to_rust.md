@@ -1,11 +1,11 @@
 +++
 title = "Introduction to Rust for Node Developers"
 description = "A JavaScript developer's guide to writing a command line program using the Rust programming language"
-date = 2020-01-07
-draft = true
+date = 2020-01-12
+draft = false
 +++
 
-In this article we will build a simple command line program that returns the word count of a file. This will essentially be a simpler version of the Unix utility `wc`, written in Rust. The goal of this article is to give an introduction to some core Rust concepts for readers who might be more familiar with web-focused languages such as JavaScript and Typescript. Therefore, the Rust code examples will be compared to similar code and concepts in JavaScrip or TypeScript. This guide also assumes no prior knowledge of Rust or related tools, but it does assume you have `node` and `npm` installed on your machine already.
+In this article we will build a simple command line program that returns the word count of a file. This will essentially be a simpler version of the Unix utility `wc`, written in Rust. The goal of this article is to give an introduction to some core Rust concepts for readers who might be more familiar with web-focused languages such as JavaScript and Typescript. Therefore, the Rust code examples will be compared to similar code and concepts in JavaScrip or TypeScript. This guide also assumes no prior knowledge of Rust or related tools, but it does assume you have `node` installed on your machine already.
 
 <!-- more -->
 
@@ -13,26 +13,29 @@ In this article we will build a simple command line program that returns the wor
 - [Setting up](#setting-up)
   - [Project structure](#project-structure)
   - [Running the project](#running-the-project)
-  - [Tour of a &quot;Hello World&quot; program in Rust](#tour-of-a-quothello-worldquot-program-in-rust)
-- [The miniwc program](#the-miniwc-program)
+  - [Tour of a "Hello World" program in Rust](#tour-of-a-%22hello-world%22-program-in-rust)
+- [The `miniwc` program](#the-miniwc-program)
   - [Building a foundation](#building-a-foundation)
     - [Types](#types)
-    - [Structures (struct)](#structures-struct)
-    - [Implementations (impl)](#implementations-impl)
-    - [Enumerations (enum)](#enumerations-enum)
+    - [Structures (`struct`)](#structures-struct)
+    - [Implementations (`impl`)](#implementations-impl)
+    - [Enumerations (`enum`)](#enumerations-enum)
   - [Handling arguments](#handling-arguments)
     - [Using Iterators](#using-iterators)
-    - [Handling all Options](#handling-all-options)
-  - [The filesystem](#the-filesystem)
-    - [Handling possible failure with expect](#handling-possible-failure-with-expect)
+    - [Handling all `Option`s](#handling-all-options)
+  - [Reading file contents](#reading-file-contents)
+    - [`Result` and `expect()`](#result-and-expect)
+  - [Counting words](#counting-words)
   - [Conclusion](#conclusion)
-    - [Other great resources](#other-great-resources)
+    - [Additional resources](#additional-resources)
+      - [For learning](#for-learning)
+      - [Other](#other)
 
 ## Notes
 
 A couple of notes and assumptions:
 
-- No previous knowledge of Rust is assumed. We'll go over all of the necessary concepts as they come up, and I'll link to relevant content where I think more detail or rigor is needed.
+- No previous knowledge of Rust is assumed. We'll go over all of the necessary concepts as they come up, and I'll link to relevant content where I think more detail or rigor is needed. I think that knowing how the fundamentals of things work is important, and I think you should as well.
 - Roughly intermediate-level experience with JavaScript is assumed. If you're just getting started with JavaScript or haven't built anything non-trivial with it, you might want to save this resource for later.
 
 ## Setting up
@@ -43,7 +46,7 @@ Once you have `cargo` available, go ahead and run `cargo new miniwc --bin` in a 
 
 ### Project structure
 
-You might now be asking, 'What is `cargo`? For those new to Rust's tooling, `cargo` is a direct parallel to `npm` in the Node ecosystem, in other words Rust's built-in package manager. You can view popular `crates` (packages) available at [crates.io](https://crates.io).
+The logical next question is "What is `cargo`?". `cargo` is a direct parallel to `npm` in the Node ecosystem, in other words Rust's built-in package manager. You can view popular `crates` (packages) available at [crates.io](https://crates.io).
 
 The `cargo new miniwc --bin` command tells `cargo` to create a new _binary_ (able to run on our machine) Rust project named `miniwc` in the directory `./miniwc` and set up the basic boilerplate project structure: `Cargo.toml`, `src/main.rs`, and a `.gitignore`.
 
@@ -56,7 +59,7 @@ The `cargo new miniwc --bin` command tells `cargo` to create a new _binary_ (abl
 
 That's it for the project structure, but what about actually running the code? In `node`, we have `npm` which allows us to define scripts such as `start` and `test`, and then run those commands via `npm run start` or `npm run test`. `cargo` gives us similar functionality. Running `cargo run` in our project directory will run our boilerplate project. Try it out, and you should see `Hello, world!` printed to your console.
 
-> You may have noticed a new `target/` directory appear after you ran `cargo run`. This is a folder managed by `cargo` to store build artifacts and other dependencies of the compilation process. For a more detailed guide to `cargo` and an overview of concepts like the `target/` directory, check out [The Cargo Book](https://doc.rust-lang.org/cargo/index.html).
+_You may have noticed a new `target/` directory appear after you ran `cargo run`. This is a folder managed by `cargo` to store build artifacts and other dependencies of the compilation process. For a more detailed guide to `cargo` and an overview of concepts like the `target/` directory, check out [The Cargo Book](https://doc.rust-lang.org/cargo/index.html)._
 
 ### Tour of a "Hello World" program in Rust
 
@@ -96,16 +99,7 @@ _`cargo` isn't strictly necessary to create Rust binaries, it just provides some
 
 ## The `miniwc` program
 
-At the end of this article, we will have an executable program that takes a filename as an argument and returns the word count of that document. We will explore the following concepts:
-
-- Functions
-- Conditionals
-- Loops
-- `struct`
-- Traits and `impl`
-- The `std` library
-- `std::env`
-- `std::fs`
+At the end of this article, we will have an executable program that takes a filename as an argument and returns the word count of that document.
 
 Let's get into it.
 
@@ -234,13 +228,11 @@ enum Coin {
   Penny,
   Nickel,
   Dime,
-  Quarter,
-  HalfDollar,
-  Dollar
+  Quarter
 }
 ```
 
-And we can reference any singe variant via:
+And we can reference any single variant via:
 
 ```rust
 let penny: Coin  = Coin::Penny;
@@ -362,19 +354,12 @@ The issue with our code is that `nth` doesn't return a `String` directly, but in
 
 Let's look at a JavaScript example that illustrates this point:
 
-File: main.js
-
 ```javascript
 // Get the first argument passed in by the user
 let arg = process.argv[2]
 
-// Do mission critical things with our argument
-function handleArg(arg) {
-  // Really important stuff
-  console.log(arg.split(''))
-}
-
-handleArg(arg)
+// Do really important stuff
+console.log(arg.split(''))
 ```
 
 There's a subtle error that will only happen sometimes in this code. Can you spot it? If we pass an argument to our program -- `node main.js hello` -- then it behaves as expected. However, if we don't pass an argument, we'll get an error that's probably very familiar if you use JavaScript a lot:
@@ -392,6 +377,8 @@ While this example is trivial to fix, it's very easy to introduce this kind of b
 
 In cases where we're dealing with input to our program that can be undefined, Rust forces us to handle the potential undefined value with the `Option` type before the program will even compile. We can see the `Option` type in action if we tweak our `println!` call a bit:
 
+File: src/main.rs
+
 ```rust
 use std::env;
 
@@ -401,9 +388,9 @@ pub fn main() {
 }
 ```
 
-_This solution was hinted at [in our error message from before](#using-iterators).By adding the `:?` to the curly brackets, we're essentially telling the `println!` macro that we want to be more lenient about the types of values we can print to the console (specifically, we've added the [debug format trait](https://doc.rust-lang.org/rust-by-example/hello/print/print_debug.html))._
+_This solution was hinted at [in our error message from before](#using-iterators). By adding the `:?` to the curly brackets, we're essentially telling the `println!` macro that we want to be more lenient about the types of values we can print to the console (specifically, we've added the [debug format trait](https://doc.rust-lang.org/rust-by-example/hello/print/print_debug.html))._
 
-_If this doesn't make much sense, don't worry about it for now. In general, the Rust compiler is very helpful, and you can usually rely it's suggestions to fix your code if you've gotten stuck. In this case, let's follow it's advice and see what we get._
+_If this doesn't make much sense, don't worry about it for now. In general, the Rust compiler is very helpful, and you can usually rely on its suggestions to fix your code if you've gotten stuck. In this case, let's follow its advice and see what we get._
 
 After a `cargo run -- hello`, you should see:
 
@@ -415,6 +402,8 @@ There it is! Since we passed in an argument to our program, `env::args.nth(1)` c
 
 Now that we understand a bit about what's going on with Rust's `Option` type, how do we actually get to the value inside `Some`? Conveniently, Rust offers us a shortcut for grabbing values we are pretty sure are going to exist in our program:
 
+File: src/main.rs
+
 ```rust
 use std::env;
 
@@ -424,12 +413,132 @@ pub fn main() {
 }
 ```
 
-`unwrap()` is a method available on `Option`, and it's pretty straightforward. If there is `Some(value)`, then return the value. If not, then _panic_ (error out). `unwrap()` also serves as a sort of "TODO" flag, in other words you know you should replace it before releasing your program into the world.
+`unwrap()` is a method available on `Option`, and it's pretty straightforward. If there is `Some(value)`, then return the value. If not, then _panic_ (error out). `unwrap()` also serves as a sort of "TODO" flag, because it signals that you should replace it before releasing your program into the world.
 
-### The filesystem
+When we run our program with at least one argument now, we should get that argument printed to the console. If we run it without any arguments, we should get a _panic_ along the lines of:
 
-#### Handling possible failure with `expect`
+```txt
+thread 'main' panicked at 'called `Option::unwrap()` on a `None` value'
+```
+
+With that brief foray into Rust `Option`s out of the way, let's next move on to actually reading text files from the system.
+
+### Reading file contents
+
+The Rust standard library [contains a module for filesystem operations](https://doc.rust-lang.org/std/fs/index.html). This module is very similar in functionality to the `fs` module in the Node standard library. In Node, we could use the contents of a file like so:
+
+```javascript
+const fs = require('fs')
+
+fs.readFile('words.txt', 'utf8', function(err, data) {
+  console.log(data)
+})
+```
+
+[The `readFile()` function](https://nodejs.org/api/fs.html#fs_fs_readfile_path_options_callback) takes a file, an optional encoding and a callback to handle either an error or the returned contents. The Rust `std::fs::read_to_string` function does something very similar, taking a file path and returning a `Result<String>`.
+
+#### `Result` and `expect()`
+
+`Result` is similar to `Option` in that it can either produce a value or something else (`None` being the 'something else' for `Option`). In the case of `Result`, the results are either:
+
+- `Ok(T)`, where `T` is an arbitrary type, or,
+- `Error` if the operation fails.
+
+In the case of `fs::read_to_string`, the `Ok` result is `Ok(String)`, since on a successful "read this file to a string" operation, the value we want back is a `String`.
+
+Let's add a simple text file to our project and test it out. Add the following text to a file called `words.txt` in the root of the project:
+
+File: words.txt
+
+```txt
+This is a file containing words
+There are several words on this line
+This one is short
+The end
+```
+
+Now let's use `read_to_string` to read `words.txt` to a variable:
+
+File: src/main.rs
+
+```rust
+use std::env;
+use std::fs;
+
+pub fn main() {
+  let filename = env::args().nth(1).unwrap();
+
+  let file_contents = fs::read_to_string(filename).expect("Error reading file to string");
+
+  println!("{}", file_contents)
+}
+```
+
+Here we use `expect()`, which is very similar to `unwrap` except it allows us to pass a custom panic message. If we run our program and pass it the argument the path of our text file (`cargo run -- words.txt`), we should see our text printed to the console.
+
+Now that we've successfully read our text file and put its contents in a variable, we can complete the final step of counting the words in that file.
+
+### Counting words
+
+Simple text manipulation like counting the number of individual words (separated by whitespace) is a great way to explore the power behind one of Rust's core philosophies, that of _zero cost abstractions_. The gist of this idea is two-fold: first, you shouldn't pay (in performance or size) for any part of the programming language that you don't use, and second, if you do choose to use a language feature then it will be just as fast (or faster) than if you wrote the feature yourself. By following this simple philosophy, Rust places itself as a prime choice for writing programs that need to be mindful of space and speed considerations.
+
+To illustrate this point, let's take another example from JavaScript. A JavaScript implementation (`node`, the browser, etc), has to include a _garbage collector_ in order to manage memory the program uses. Even if all you do is `console.log('Hello World')`, the entirety of the JavaScript runtime, including the _garbage collector_ have to be there. In Rust, when you `println!`, the only code that gets compiled and run is the code specifically needed to print things.
+
+It is worth noting that sometimes we don't really care that much about speed or size of our programs, and in those cases Rust doesn't have much of an advantage over JavaScript or any other language. But, when we do care about those things Rust really comes into it's own. In many cases with Rust you get the flexibility and expressive power of a super high level programming language while also getting near-unmatched performance. Let's look at an example:
+
+```rust
+use std::env;
+use std::fs;
+
+pub fn main() {
+  let filename = env::args().nth(1).unwrap();
+
+  let file_contents = fs::read_to_string(filename).expect("Error retrieving file");
+
+  let number_of_words = file_contents.split_whitespace().count();
+
+  println!("{}", number_of_words)
+}
+```
+
+Here we've added a single line to our program, changed another, and essentially achieved our desired functionality. Let's take it step-by-step.
+
+Once we have the file contents from our `words.txt` file bound to a variable, we take that`file_contents` `String` and split it up on [any Unicode whitespace via `split_whitespace`](https://doc.rust-lang.org/std/primitive.str.html#method.split_whitespace). This returns an _Iterator_ value. This would be roughly the equivalent of using the `split()` method on a `String` in JavaScript, for example:
+
+```javascript
+let exampleString = 'This is an example'
+console.log(exampleString.split(' ')) // Array(4) [ "This", "is", "an", "example" ]
+```
+
+Once we've done that, we can consume the `Iterator` with `count()` to get the number of items in it. A similar approach in JavaScript would be to use the `length` property of the returned `Array` from before.
+
+Finally, we print the resulting count to the console. And that's it! Run `cargo run -- words.txt` to see the number of words in our text file.
 
 ### Conclusion
 
-#### Other great resources
+This program is very simple, but it illustrates a plethora of core Rust concepts. It also leaves out some other very important tools and ideas. For example:
+
+- We could handle the `Error` and `None` cases in our argument-handling and I/O functionality [using `match`](https://doc.rust-lang.org/book/ch09-02-recoverable-errors-with-result.html)
+- We could have counted the individual words using `Vectors` and `loops`
+- We could have opted for a more object-oriented approach and contained our functionality to `struct`s and `impls`
+- And lots more
+
+If you've made it this far, thanks so much for reading! Writing this article has been a learning process for me, and I still very much consider myself a Rust beginner. If you spot any mistakes, or see any grievous infractions of best-practices, please reach out at `tindleaj[at]gmail[dot]com` or [@tindleaj](https://twitter.com/tindleaj) If you're interested in learning more Rust, there are a ton of other great, free, and current resources to do so.
+
+#### Additional resources
+
+##### For learning
+
+- [The Rust Programming Language](https://doc.rust-lang.org/stable/book/) - official, incredibly well written, definitely should be your first stop
+- [Rustlings](https://github.com/rust-lang/rustlings) - awesome interactive learning tool
+- [Rust for Node developers](https://github.com/Mercateo/rust-for-node-developers) - a big inspiration for this article
+- [Rust by Example](https://doc.rust-lang.org/rust-by-example/) - says it right on the tin
+- [A Gentle Introduction to Rust](https://stevedonovan.github.io/rust-gentle-intro/readme.html) - a tour through some of the great Rust features
+- [Exercism.io](https://exercism.io/tracks/rust) - more small, interactive projects
+
+##### Other
+
+- [Writing an OS in Rust](https://os.phil-opp.com/) - incredible project, I aspire to one day be this good
+- [IntermezzOS](http://intermezzos.github.io/) - more operating systems
+- [Roguelike Tutorial - In Rust](http://bfnightly.bracketproductions.com/rustbook/chapter_0.html) - I haven't gone through this one yet myself, but I've heard really good things
+- [Read Rust](https://readrust.net/) - great source for Rust related news and happenings
