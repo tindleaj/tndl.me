@@ -16,7 +16,7 @@ Primary tools include JavaScript and TypeScript. Experience with Rust, Python, a
 
 <p>&nbsp;</p>
 
-[tindleaj@gmail.com](mailto:tindleaj@gmail.com)
+tindleaj [at] gmail
 
 [github.com/tindleaj](https://github.com/tindleaj)
 

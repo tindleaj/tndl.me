@@ -1,3 +1,5 @@
 public/
 public/*
 .DS_Store
+dist/
+**/node_modules/
