@@ -1,62 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Fira+Mono"
+      rel="stylesheet"
+    />
+    <link href="{{ config.base_url }}/site.css" rel="stylesheet" />
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="apple-mobile-web-app-capable"
-        content="yes">
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1">
-  <meta name="description"
-        content="">
-  <meta name="author"
-        content="">
-  <link href="https://fonts.googleapis.com/css?family=Fira+Mono"
-        rel="stylesheet">
-  <link href="{{ config.base_url }}/site.css"
-        rel="stylesheet">
+    <title>Austin Tindle | {{ section.title }}</title>
+  </head>
 
-  <title>Austin Tindle | {{ section.title }}</title>
-</head>
+  <body id="section">
+    <section>
+      <h1><a href="{{ config.base_url }}">Austin Tindle</a></h1>
+      <p><em>Software Engineer</em></p>
+      <p>---</p>
+      {{ section.content | safe }}
+      <p><a href="{{ config.base_url }}/rss.xml">Subscribe (RSS).</a></p>
+    </section>
 
-<body id="section">
-  <section>
-    <h1><a href="{{ config.base_url }}">Austin Tindle</a></h1>
-    <p><em>Software Engineer</em></p>
-    <p>---</p>
-    {{ section.content  | safe }}
-    <p><a href="{{ config.base_url }}/rss.xml">Subscribe (RSS).</a></p>
-  </section>
-
-  <p>&nbsp;</p>
-  <section>
-
-    {% for page in section.pages %}
-    <article>
-      <span>
+    <p>&nbsp;</p>
+    <section>
+      {% for page in section.pages %}
+      <article>
+        <span>
+          <h3>
+            <a href="{{ page.permalink }}"> {{ page.title }}</a>
+            <span style="font-weight: 300;">({{ page.date }})</span>
+          </h3>
+        </span>
+      </article>
+      {% endfor %} {% for sub in section.subsections %} {% set section =
+      get_section(path=sub) %} {% for page in section.pages %}
+      <article>
         <h3>
           <a href="{{ page.permalink }}"> {{ page.title }}</a>
           <span style="font-weight: 300;">({{ page.date }})</span>
         </h3>
-      </span>
-    </article>
-    {% endfor %}
-
-    {% for sub in section.subsections %}
-
-    {% set section = get_section(path=sub) %}
-    {% for page in section.pages %}
-    <article>
-      <h3>
-        <a href="{{ page.permalink }}"> {{ page.title }}</a>
-        <span style="font-weight: 300;">({{ page.date }})</span>
-      </h3>
-    </article>
-    {% endfor %}
-
-    {% endfor %}
-
-  </section>
-</body>
-
+      </article>
+      {% endfor %} {% endfor %}
+    </section>
+  </body>
 </html>

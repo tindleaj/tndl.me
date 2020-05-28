@@ -2,9 +2,9 @@
 title = "Home"
 +++
 
-# [Austin Tindle](/)
+Austin Tindle
 
-_Software Engineer_
+SOFTWARE ENGINEER
 
 \-\-\-
 
@@ -12,7 +12,7 @@ I build things with computers.
 
 Primary tools include JavaScript and TypeScript. Experience with Rust, Python, and Go.
 
-[Resume](https://www.linkedin.com/in/austintindle/). [Blog](./blog).
+[Resume](./resume). [Blog](./blog).
 
 <p>&nbsp;</p>
 

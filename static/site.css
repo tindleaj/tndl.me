@@ -1,6 +1,10 @@
-* {
+body {
   font-family: Fira Mono, monospace;
   font-size: 16px;
+}
+
+body#resume {
+  font-size: 0.75em;
 }
 
 code {
@@ -26,24 +30,24 @@ section {
 .markdown h4:before,
 .markdown h5:before,
 .markdown h6:before {
-  content: '# ';
+  content: "# ";
   display: inline;
   font-weight: bold;
 }
 
 .markdown h2:before {
-  content: '## ';
+  content: "## ";
 }
 
 .markdown h3:before {
-  content: '### ';
+  content: "### ";
 }
 .markdown h4:before {
-  content: '#### ';
+  content: "#### ";
 }
 .markdown h5:before {
-  content: '##### ';
+  content: "##### ";
 }
 .markdown h6:before {
-  content: '###### ';
+  content: "###### ";
 }
