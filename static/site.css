@@ -1,10 +1,10 @@
-body {
+* {
   font-family: Fira Mono, monospace;
   font-size: 16px;
 }
 
-body#resume {
-  font-size: 0.75em;
+body#resume * {
+  font-size: 0.9em !important;
 }
 
 code {

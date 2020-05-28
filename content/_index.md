@@ -2,12 +2,6 @@
 title = "Home"
 +++
 
-Austin Tindle
-
-SOFTWARE ENGINEER
-
-\-\-\-
-
 I build things with computers.
 
 Primary tools include JavaScript and TypeScript. Experience with Rust, Python, and Go.
