@@ -1,6 +1,6 @@
 +++
 title = "Do Significant Work"
-description = “It ain’t what you do, it’s the way that you do it.”
+description = "Richard Hamming, You and Your Research"
 date = 2020-05-28
 draft = false
 +++
@@ -9,7 +9,7 @@ The Stripe Press just published a beautiful reprint of Richard Hamming's [_The A
 
 It opens with Hamming admitting that the lecture could just as easily be called “You and Your Engineering Career,” or even “You and Your Career". He suggests that we should try to do significant things in our careers, rather than insignificant things. Hamming means 'significant' in the 'significant to mankind' sense, what he says applies to the 'personally significant' just as well. To do significant things, we need to:
 
-- Focus only on the most important problems you can try to solve
+- Focus on the most important problems you can try to solve
 - Work at those problems consistently
 - Be excellent in our work
 
@@ -23,4 +23,4 @@ The final point is the one that resonated with me the most. Be excellent. So muc
 
 Hamming concludes on the point of excellence. For him, the most important thing about the work we do is how we do it:
 
-_"... it is nice to end up where you wanted to be, but the person you are when you get there is far more important. I believe a life in which you do not try to extend yourself regularly is not worth living—but it is up to you to pick the goals you believe are worth striving for._
+_"... it is nice to end up where you wanted to be, but the person you are when you get there is far more important. I believe a life in which you do not try to extend yourself regularly is not worth living—but it is up to you to pick the goals you believe are worth striving for."_
