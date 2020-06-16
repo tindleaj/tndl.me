@@ -13,7 +13,7 @@ In this article we will build a simple command line program that returns the wor
 - [Setting up](#setting-up)
   - [Project structure](#project-structure)
   - [Running the project](#running-the-project)
-  - [Tour of a "Hello World" program in Rust](#tour-of-a-%22hello-world%22-program-in-rust)
+  - [Tour of a "Hello World" program in Rust](#tour-of-a-hello-world-program-in-rust)
 - [The `miniwc` program](#the-miniwc-program)
   - [Building a foundation](#building-a-foundation)
     - [Types](#types)
@@ -28,7 +28,8 @@ In this article we will build a simple command line program that returns the wor
   - [Counting words](#counting-words)
 - [Conclusion](#conclusion)
   - [Additional resources](#additional-resources)
-    - [For learning](#for-learning)
+    - [Books](#books)
+    - [Projects](#projects)
     - [Other](#other)
 
 ## Notes
@@ -77,12 +78,12 @@ If we ported the above Rust program to JavaScript it would look like:
 
 ```javascript
 function main() {
-  console.log('Hello, world!')
+  console.log("Hello, world!");
 }
 
 // Since `main()` isn't a special function in JavaScript,
 // we have to invoke it if we want our code to run:
-main()
+main();
 ```
 
 _If the distinction between compiled and interpreted languages is a bit hazy for you, take a look at [this article](https://guide.freecodecamp.org/computer-science/compiled-versus-interpreted-languages/) for a more in-depth treatment._
@@ -169,21 +170,21 @@ For the purposes of this project, you don't need to be super familiar with the i
 // it's simpler for this example
 class Message {
   send(content) {
-    console.log(content)
+    console.log(content);
   }
 }
 
 class PrivateMessage extends Message {
   send(content) {
-    super.send('private: ' + content)
+    super.send("private: " + content);
   }
 }
 
-var message = new Message()
-message.send('hello') // hello
+var message = new Message();
+message.send("hello"); // hello
 
-var privateMessage = new PrivateMessage()
-privateMessage.send('hello') // private: hello
+var privateMessage = new PrivateMessage();
+privateMessage.send("hello"); // private: hello
 ```
 
 Here, we've modeled `PrivateMessage` _as a_ `Message`. It inherits the `send` function we defined on `Message`, but we can change it to be specific for our `PrivateMessage` class. Rust has a different way of doing things. Let's take a look at the same idea, expressed in Rust:
@@ -257,7 +258,7 @@ File: main.js
 
 ```javascript
 for (let arg of process.argv) {
-  console.log(arg)
+  console.log(arg);
 }
 ```
 
@@ -356,10 +357,10 @@ Let's look at a JavaScript example that illustrates this point:
 
 ```javascript
 // Get the first argument passed in by the user
-let arg = process.argv[2]
+let arg = process.argv[2];
 
 // Do really important stuff
-console.log(arg.split(''))
+console.log(arg.split(""));
 ```
 
 There's a subtle error that will only happen sometimes in this code. Can you spot it? If we pass an argument to our program -- `node main.js hello` -- then it behaves as expected. However, if we don't pass an argument, we'll get an error that's probably very familiar if you use JavaScript a lot:
@@ -428,11 +429,11 @@ With that brief foray into Rust `Option`s out of the way, let's next move on to 
 The Rust standard library [contains a module for filesystem operations](https://doc.rust-lang.org/std/fs/index.html). This module is very similar in functionality to the `fs` module in the Node standard library. In Node, we could use the contents of a file like so:
 
 ```javascript
-const fs = require('fs')
+const fs = require("fs");
 
-fs.readFile('words.txt', 'utf8', function(err, data) {
-  console.log(data)
-})
+fs.readFile("words.txt", "utf8", function (err, data) {
+  console.log(data);
+});
 ```
 
 [The `readFile()` function](https://nodejs.org/api/fs.html#fs_fs_readfile_path_options_callback) takes a file, an optional encoding and a callback to handle either an error or the returned contents. The Rust `std::fs::read_to_string` function does something very similar, taking a file path and returning a `Result<String>`.
@@ -506,8 +507,8 @@ Here we've added a single line to our program, changed another, and essentially 
 Once we have the file contents from our `words.txt` file bound to a variable, we take that`file_contents` `String` and split it up on [any Unicode whitespace via `split_whitespace`](https://doc.rust-lang.org/std/primitive.str.html#method.split_whitespace). This returns an _Iterator_ value. This would be roughly the equivalent of using the `split()` method on a `String` in JavaScript, for example:
 
 ```javascript
-let exampleString = 'This is an example'
-console.log(exampleString.split(' ')) // Array(4) [ "This", "is", "an", "example" ]
+let exampleString = "This is an example";
+console.log(exampleString.split(" ")); // Array(4) [ "This", "is", "an", "example" ]
 ```
 
 Once we've done that, we can consume the `Iterator` with `count()` to get the number of items in it. A similar approach in JavaScript would be to use the `length` property of the returned `Array` from before.
@@ -527,18 +528,23 @@ If you've made it this far, thanks so much for reading! Writing this article has
 
 ### Additional resources
 
-#### For learning
+#### Books
 
 - [The Rust Programming Language](https://doc.rust-lang.org/stable/book/) - official, incredibly well written, definitely should be your first stop
-- [Rustlings](https://github.com/rust-lang/rustlings) - awesome interactive learning tool
-- [Rust for Node developers](https://github.com/Mercateo/rust-for-node-developers) - a big inspiration for this article
+- [Fullstack Rust](https://www.newline.co/fullstack-rust) - great project-focused book that teaches practical Rust programming. Emphasis on web applications.
+- [Rust in Action](https://www.manning.com/books/rust-in-action) a``nother great project-focused book. Emphasis on systems programming.
 - [Rust by Example](https://doc.rust-lang.org/rust-by-example/) - says it right on the tin
 - [A Gentle Introduction to Rust](https://stevedonovan.github.io/rust-gentle-intro/readme.html) - a tour through some of the great Rust features
-- [Exercism.io](https://exercism.io/tracks/rust) - more small, interactive projects
+- [Rust for Node developers](https://github.com/Mercateo/rust-for-node-developers) - a big inspiration for this article
 
-#### Other
+#### Projects
 
 - [Writing an OS in Rust](https://os.phil-opp.com/) - incredible project, I aspire to one day be this good
 - [IntermezzOS](http://intermezzos.github.io/) - more operating systems
 - [Roguelike Tutorial - In Rust](http://bfnightly.bracketproductions.com/rustbook/chapter_0.html) - I haven't gone through this one yet myself, but I've heard really good things
+
+#### Other
+
+- [Rustlings](https://github.com/rust-lang/rustlings) - awesome interactive learning tool
+- [Exercism.io](https://exercism.io/tracks/rust) - more small, interactive projects
 - [Read Rust](https://readrust.net/) - great source for Rust related news and happenings
