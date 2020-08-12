@@ -5,6 +5,8 @@ date = 2020-01-12
 draft = false
 +++
 
+_Are you a JavaScript developer trying to learn Rust? Send me an email at [tindleaj@gmail.com](mailto:tindleaj@gmail.com). I'm working on stuff you'll be interested in._
+
 In this article we will build a simple command line program that returns the word count of a file. This will essentially be a simpler version of the Unix utility `wc`, written in Rust. The goal of this article is to give an introduction to some core Rust concepts for readers who might be more familiar with web-focused languages such as JavaScript and Typescript. Therefore, the Rust code examples will be compared to similar code and concepts in JavaScrip or TypeScript. This guide also assumes no prior knowledge of Rust or related tools, but it does assume you have `node` installed on your machine already.
 
 <!-- more -->
