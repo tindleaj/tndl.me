@@ -534,7 +534,7 @@ If you've made it this far, thanks so much for reading! Writing this article has
 
 - [The Rust Programming Language](https://doc.rust-lang.org/stable/book/) - official, incredibly well written, definitely should be your first stop
 - [Fullstack Rust](https://www.newline.co/fullstack-rust) - great project-focused book that teaches practical Rust programming. Emphasis on web applications.
-- [Rust in Action](https://www.manning.com/books/rust-in-action) a``nother great project-focused book. Emphasis on systems programming.
+- [Rust in Action](https://www.manning.com/books/rust-in-action) another great project-focused book. Emphasis on systems programming.
 - [Rust by Example](https://doc.rust-lang.org/rust-by-example/) - says it right on the tin
 - [A Gentle Introduction to Rust](https://stevedonovan.github.io/rust-gentle-intro/readme.html) - a tour through some of the great Rust features
 - [Rust for Node developers](https://github.com/Mercateo/rust-for-node-developers) - a big inspiration for this article
