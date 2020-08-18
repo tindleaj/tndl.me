@@ -6,7 +6,7 @@ I build things with computers.
 
 Primary tools include JavaScript and TypeScript. Experience with Rust, Python, and Go.
 
-[Resume](./resume). [Blog](./blog).
+[Resume](./resume.pdf). [Blog](./blog).
 
 <p>&nbsp;</p>
 
