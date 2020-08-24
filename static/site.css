@@ -1,6 +1,8 @@
 * {
   font-family: Fira Mono, monospace;
   font-size: 16px;
+  color: #bbb;
+  background-color: #111;
 }
 
 body#resume * {
@@ -8,16 +10,23 @@ body#resume * {
 }
 
 code {
-  color: #333;
+  color: #ddd;
   font-family: monospace;
-  background-color: #eee;
+  background-color: #333;
 }
 
 pre {
-  padding: 0 0 0 1em;
+  padding: 1em;
   font-family: monospace;
   margin: 3em 0;
-  overflow: scroll;
+
+  overflow-y: hidden;
+  overflow-x: scroll;
+}
+
+pre span {
+  background-color: #282828;
+  /* color: #fff !important; */
 }
 
 section {
