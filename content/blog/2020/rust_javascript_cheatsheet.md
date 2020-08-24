@@ -11,7 +11,7 @@ For the JavaScript developer, Rust offers a plethora of new and sometimes brain-
 
 This cheatsheet provides some basic comparisons between JavaScript syntax and their parallels in Rust. It purposefully sticks to the basics that have decent parallels, to get you comfortable writing some simple programs in Rust.
 
-Don't let the label of "Systems Programming Language" discourage you. Rust is an incredibly accessible language, in more ways than one. Use what you already know and [learn some Rust](https://tndl.me/blog/introduction_to_rust)!
+Don't let the label of "Systems Programming Language" discourage you. Rust is an incredibly accessible language, in more ways than one. Use what you already know and [learn some Rust](https://tndl.me/blog/2020/introduction-to-rust/)!
 
 ## Variables (bindings)
 
