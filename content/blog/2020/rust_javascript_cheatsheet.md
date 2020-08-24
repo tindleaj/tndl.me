@@ -15,7 +15,7 @@ Don't let the label of "Systems Programming Language" discourage you. Rust is an
 
 ## Variables (bindings)
 
-Rust variables are immutable by default. This is sort of like having all varaibles be `const` in JavaScript. JavaScript `const` is shallow, but Rust variables cannot be mutated at all unless you declare that variable `mut`.
+Rust variables are immutable by default. This is sort of like having all variables be `const` in JavaScript. JavaScript `const` is shallow, but Rust variables cannot be mutated at all unless you declare that variable `mut`.
 
 ```javascript
 // JavaScript
