@@ -269,7 +269,7 @@ for (let utensil of utensils) {
 
 let utensils = vec!["Fork", "Spoon", "Spork", "Knife"];
 
-for utensil in utensils.iter() {
+for utensil in utensils {
   println!("Eating with a {}.", utensil);
 }
 
