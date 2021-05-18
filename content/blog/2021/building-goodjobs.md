@@ -1,4 +1,9 @@
-# One month of building GoodJobs
++++
+title = "One month of building GoodJobs"
+description = "Thoughts after a month of building a good job board"
+date = 2021-05-18
+draft = false
++++
 
 About a month ago, I finished up the MVP for [GoodJobs](https://goodjobs.careers), and deployed it to the world. GoodJobs is a job board that lists positions at companies trying to solve problems like food insecurity and climate change, among other important things. This is a project I've really enjoyed working on, and the first (relative) success that I've had with a side-project like this. I want to share a few thoughts about the process, and highlight some things I've learned in the past month.
 
