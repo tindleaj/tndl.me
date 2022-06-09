@@ -2,4 +2,4 @@
 title = "Blog"
 +++
 
-Thoughts on programming, productivity, philosophy.
+Thoughts on things. Mostly programming, productivity, and philosophy.

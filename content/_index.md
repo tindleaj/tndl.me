@@ -2,15 +2,16 @@
 title = "Home"
 +++
 
-I build things with computers.
+I make things, mostly with computers.
 
 Primary tools include JavaScript and TypeScript. Experience with Rust, Python, and Go.
 
-[Resume](./resume.pdf). [Blog](./blog).
+[Resume](./resume.pdf). [Writing](./blog).
 
 <p>&nbsp;</p>
 
-tindleaj [at] gmail
+
+[tndl.substack.com](https://tndl.substack.com/)
 
 [github.com/tindleaj](https://github.com/tindleaj)
 
