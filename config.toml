@@ -19,7 +19,7 @@ highlight_theme = "gruvbox-dark"
 # Whether to build a search index to be used later on by a JavaScript library
 build_search_index = false
 
-generate_rss = true
+generate_feed = true
 
 [extra]
 # Put all your custom variables here
