@@ -6,12 +6,6 @@
     <p>&nbsp;</p>
   </div>
   <section class="markdown">
-    <strong
-      ><a href="https://tndl.substack.com/"
-        >Get emailed about new posts.</a
-      ></strong
-    >
-
     <p>&nbsp;</p>
 
     <p>{{ page.date }}</p>
@@ -19,11 +13,23 @@
     {{ page.content | safe }}
 
     <p>&nbsp;</p>
-    <strong
-      ><a href="https://tndl.substack.com/"
-        >Get emailed about new posts.</a
-      ></strong
+
+    <form
+      action="https://buttondown.email/api/emails/embed-subscribe/tndl"
+      method="post"
+      target="popupwindow"
+      onsubmit="window.open('https://buttondown.email/tndl', 'popupwindow')"
+      class="embeddable-buttondown-form"
     >
+      <p>Subscribe for updates</p>
+      <input
+        type="email"
+        name="email"
+        id="bd-email"
+        placeholder="you@email.com"
+      />
+      <input type="submit" value="Subscribe" />
+    </form>
     <p>&nbsp;</p>
   </section>
 </body>
