@@ -1,7 +1,5 @@
-{% extends "base.html" %}
-{% block title %}{{ section.title }}{% endblock title %}
-
-{% block content %}
+{% extends "base.html" %} {% block title %}{{ section.title }}{% endblock title
+%} {% block content %}
 <body id="section">
   <section>
     <h1><a href="{{ config.base_url }}">Austin Tindle</a></h1>
@@ -12,7 +10,7 @@
       <strong>
         <a href="https://tndl.substack.com/">Subscribe to emails</a>
       </strong>
-      <a href="{{ config.base_url }}/atom.xml">(or RSS)</a>.
+      <a href="{{ config.base_url }}/rss.xml">(or RSS)</a>.
     </p>
   </section>
 
@@ -23,7 +21,7 @@
       <span>
         <h3>
           <a href="{{ page.permalink }}"> {{ page.title }}</a>
-          <span style="font-weight: 300;">({{ page.date }})</span>
+          <span style="font-weight: 300">({{ page.date }})</span>
         </h3>
       </span>
     </article>
@@ -32,7 +30,7 @@
     <article>
       <h3>
         <a href="{{ page.permalink }}"> {{ page.title }}</a>
-        <span style="font-weight: 300;">({{ page.date }})</span>
+        <span style="font-weight: 300">({{ page.date }})</span>
       </h3>
     </article>
     {% endfor %} {% endfor %}

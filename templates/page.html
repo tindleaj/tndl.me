@@ -1,6 +1,4 @@
-{% extends "base.html" %}
-{% block title %}{{ page.title }}{% endblock title %}
-
+{% extends "base.html" %} {% block title %}{{ page.title }}{% endblock title %}
 {% block content %}
 <body id="blog">
   <div>
@@ -8,7 +6,11 @@
     <p>&nbsp;</p>
   </div>
   <section class="markdown">
-    <strong><a href="https://tndl.substack.com/">Get emailed about new posts.</a></strong>
+    <strong
+      ><a href="https://tndl.substack.com/"
+        >Get emailed about new posts.</a
+      ></strong
+    >
 
     <p>&nbsp;</p>
 
@@ -17,7 +19,11 @@
     {{ page.content | safe }}
 
     <p>&nbsp;</p>
-    <strong><a href="https://tndl.substack.com/">Get emailed about new posts.</a></strong>
+    <strong
+      ><a href="https://tndl.substack.com/"
+        >Get emailed about new posts.</a
+      ></strong
+    >
     <p>&nbsp;</p>
   </section>
 </body>
