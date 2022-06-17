@@ -7,10 +7,23 @@
     {{ section.content | safe }}
     <p>&nbsp;</p>
     <p>
-      <strong>
-        <a href="https://tndl.substack.com/">Subscribe to emails</a>
-      </strong>
-      <a href="{{ config.base_url }}/rss.xml">(or RSS)</a>.
+      <form
+      action="https://buttondown.email/api/emails/embed-subscribe/tndl"
+      method="post"
+      target="popupwindow"
+      onsubmit="window.open('https://buttondown.email/tndl', 'popupwindow')"
+      class="embeddable-buttondown-form"
+    >
+      <p>Subscribe for email updates <a href="{{ config.base_url }}/atom.xml">(or RSS)</a>.</p>
+      <input
+        type="email"
+        name="email"
+        id="bd-email"
+        placeholder="you@email.com"
+      />
+      <input type="submit" value="Subscribe" />
+    </form>
+      
     </p>
   </section>
 
